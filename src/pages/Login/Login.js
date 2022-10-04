@@ -1,10 +1,14 @@
-import { useState} from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-  
+    
+    const navigate = useNavigate();
+
     return (
     <Content>
       <LeftContainer>
@@ -27,6 +31,7 @@ function Login() {
             Login
           </button>
         </form>
+        <h6 onClick={()=> navigate("/register")}>New here? Create account!</h6>
       </LeftContainer>
       <RightContainer>
 
@@ -48,6 +53,9 @@ const LeftContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+  h6{
+    cursor: pointer;
   }
 `;
 const RightContainer = styled.div`
