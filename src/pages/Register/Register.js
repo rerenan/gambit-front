@@ -1,19 +1,46 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Register() {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
+  async function signUp(e){
+    e.preventDefault()
+    try {
+    const user = {
+      username,
+      email,
+      password,
+      confirmPassword
+    }
+
+    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/user/register`, user);
+    
+    navigate("/login");
+
+    } catch (error) {
+      alert(error)
+    }
+  } 
+
   return (
     <Content>
       <LeftContainer>
-        <form onSubmit={() => {}}>
+        <form onSubmit={signUp}>
+        <input
+            type="text"
+            placeholder="username"
+            value={username}
+            required
+            onChange={(e) => setUsername(e.target.value)}
+          />
           <input
             type="email"
             placeholder="e-mail"
@@ -29,14 +56,7 @@ function Register() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <input
-            type="text"
-            placeholder="username"
-            value={userName}
-            required
-            onChange={(e) => setUserName(e.target.value)}
-          />
-          <input
-            type="text"
+            type="password"
             placeholder="confirm your password"
             value={confirmPassword}
             required
