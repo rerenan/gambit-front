@@ -1,18 +1,39 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 
 function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    
-    const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    return (
+  const navigate = useNavigate();
+
+  async function signIn(e) {
+    e.preventDefault();
+    try {
+      const user = {
+        email,
+        password,
+      };
+
+      await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/user/`,
+        user
+      );
+
+      navigate("/");
+
+    } catch (error) {
+      console.log(error);
+      alert(error.response.data);
+    }
+  }
+
+  return (
     <Content>
       <LeftContainer>
-        <form onSubmit={()=>{}}>
+        <form onSubmit={signIn}>
           <input
             type="email"
             placeholder="e-mail"
@@ -27,15 +48,11 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">
-            Login
-          </button>
+          <button type="submit">Login</button>
         </form>
-        <h6 onClick={()=> navigate("/register")}>New here? Create account!</h6>
+        <h6 onClick={() => navigate("/register")}>New here? Create account!</h6>
       </LeftContainer>
-      <RightContainer>
-
-      </RightContainer>
+      <RightContainer></RightContainer>
     </Content>
   );
 }
@@ -49,12 +66,12 @@ const LeftContainer = styled.div`
   height: 100%;
   padding: 40px;
   background-color: white;
-  form{
+  form {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
-  h6{
+  h6 {
     cursor: pointer;
   }
 `;

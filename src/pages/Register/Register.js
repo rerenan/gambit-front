@@ -26,7 +26,8 @@ function Register() {
     navigate("/login");
 
     } catch (error) {
-      alert(error)
+      console.log(error)
+      alert(error.response.data)
     }
   } 
 
