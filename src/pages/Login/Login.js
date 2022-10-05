@@ -17,10 +17,11 @@ function Login() {
         password,
       };
 
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/user/`,
         user
       );
+      localStorage.setItem("authToken",response.data.token)
 
       navigate("/");
 
