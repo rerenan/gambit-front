@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Login() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -81,4 +81,3 @@ const RightContainer = styled.div`
   height: 100%;
   background-color: black;
 `;
-export default Login;
