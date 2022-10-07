@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import styled from "styled-components"
+import CreatePost from "../../components/CreatePost/CreatePost";
 import Header from "../../components/Header"
 
 
@@ -9,12 +10,13 @@ export default function Home() {
     
     console.log(token)
 
-
+    
     
     return(
         <>
         <Header/>
         <Content>
+            <CreatePost/>
             <PostsBox>
 
             </PostsBox>
@@ -23,6 +25,11 @@ export default function Home() {
     )
 };
 
-const Content = styled.div``
+const Content = styled.div`
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
 
 const PostsBox = styled.div``
