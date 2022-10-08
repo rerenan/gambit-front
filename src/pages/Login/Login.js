@@ -28,27 +28,23 @@ export default function Login() {
   });
 
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   const navigate = useNavigate();
 
-  async function signIn(e) {
-    e.preventDefault();
+  async function signIn(data) {
+    setLoading(true)
     try {
-      const user = {
-        email,
-        password,
-      };
-
       const response = await axios.post(
         `${process.env.REACT_APP_API_BASE_URL}/user/`,
-        user
+        data
       );
       localStorage.setItem("authToken",response.data.token)
-
+      setLoading(false)
       navigate("/");
 
     } catch (error) {
+      setLoading(false)
       console.log(error);
       alert(error.response.data);
     }
@@ -71,7 +67,7 @@ export default function Login() {
   return (
     <Content>
       <LeftContainer>
-        <form onSubmit={signIn}>
+        <form onSubmit={handleSubmit(signIn)}>
         <FormControl error={!!errors.email} fullWidth>
         <InputLabel>
             Email
@@ -122,7 +118,7 @@ export default function Login() {
           type="submit"
           loading={loading}
           >
-            Register
+            Login
           </LoadingButton>
         
         <Link to="/register">Don’t have an account? Sign Up</Link>
