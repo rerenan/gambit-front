@@ -14,6 +14,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LoadingButton from '@mui/lab/LoadingButton';
 import imageTest from "../../assets/images/test.webp"
+import { handleValidateEmail } from "../../utils/emailValidator";
 
 
 export default function Register() {
@@ -59,10 +60,6 @@ export default function Register() {
       alert(error.response.data);
     }
   }
-  const handleValidateEmail = (email) => 
-     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      email
-  )
 
 
   const handleChangePassword = (prop) => (event) => {
@@ -93,7 +90,7 @@ export default function Register() {
     <Content>
       <LeftContainer>
         <form onSubmit={handleSubmit(signUp)}>
-        <FormControl error={!!errors.username} fullWidth>
+        <FormControl error={!!errors.username} fullWidth margin="dense">
         <InputLabel>
             Username
           </InputLabel>
@@ -107,7 +104,7 @@ export default function Register() {
           />
           <FormHelperText error>{errors.username?.type === 'required' && <p role="alert">First name is required</p>}</FormHelperText>
         </FormControl>
-        <FormControl error={!!errors.email} fullWidth>
+        <FormControl error={!!errors.email} fullWidth margin="dense">
         <InputLabel>
             Email
           </InputLabel>
@@ -124,7 +121,7 @@ export default function Register() {
           <FormHelperText error>{errors.email?.type === 'required' && <p role="alert">Email is required</p>}</FormHelperText>
           <FormHelperText error>{errors.email?.type === 'validate' && <p role="alert">Email invalid!</p>}</FormHelperText>
         </FormControl>
-        <FormControl error={!!errors.password} fullWidth>
+        <FormControl error={!!errors.password} fullWidth margin="dense">
           <InputLabel>
             Password
           </InputLabel>
@@ -151,7 +148,7 @@ export default function Register() {
           />
           <FormHelperText error>{errors.password?.type === 'required' && <p role="alert">Password is required</p>}</FormHelperText>
         </FormControl>
-        <FormControl error={!!errors.confirmPassword} fullWidth>
+        <FormControl error={!!errors.confirmPassword} fullWidth margin="dense">
           <InputLabel>
             Confirm Your Password
           </InputLabel>
@@ -220,12 +217,10 @@ const LeftContainer = styled.div`
   }
   form{
     width: 100%;
-    height:400px;
     display: flex;
     flex-direction: column;
     padding: 0px 30px;
     align-items: center;
-    justify-content: space-around;
     margin-bottom: 125px;
   }
   .register-button{
