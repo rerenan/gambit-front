@@ -8,7 +8,6 @@ import Header from "../../components/Header"
 export default function Home() {
     const [token, setToken] = useState(localStorage.getItem("authToken"));
     
-    console.log(token)
 
     
     
@@ -16,7 +15,7 @@ export default function Home() {
         <>
         <Header/>
         <Content>
-            <CreatePost/>
+            <CreatePost token={token}/>
             <PostsBox>
 
             </PostsBox>
