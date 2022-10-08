@@ -1,71 +1,198 @@
-import styled from "styled-components";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import { useForm } from "react-hook-form";
+
+import styled from "styled-components";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import LoadingButton from '@mui/lab/LoadingButton';
+
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [password, setpassword] = useState({
+    amount: "",
+    password: "",
+    weight: "",
+    weightRange: "",
+    showPassword: false,
+  });
+
+  const [confirmPassword, setConfirmPassword] = useState({
+    amount: "",
+    password: "",
+    weight: "",
+    weightRange: "",
+    showPassword: false,
+  });
+
+  const [loading, setLoading] = useState(false);
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
   const navigate = useNavigate();
 
-  async function signUp(e){
-    e.preventDefault()
+  password.current = watch("password", "");
+
+  async function signUp(data) {
+    setLoading(true);
+
     try {
-    const user = {
-      username,
-      email,
-      password,
-      confirmPassword
-    }
-
-    await axios.post(`${process.env.REACT_APP_API_BASE_URL}/user/register`, user);
-    
-    navigate("/login");
-
+      await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/user/register`,
+        data
+      );
+      setLoading(false)
+      navigate("/login");
     } catch (error) {
-      console.log(error)
-      alert(error.response.data)
+      setLoading(false)
+      console.log(error);
+      alert(error.response.data);
     }
-  } 
+  }
+  const handleValidateEmail = (email) => 
+     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      email
+  )
 
+
+  const handleChangePassword = (prop) => (event) => {
+    setpassword({ ...password, [prop]: event.target.value });
+  };
+
+  const handleChangeConfirmPassword = (prop) => (event) => {
+    setConfirmPassword({ ...confirmPassword, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setpassword({
+      ...password,
+      showPassword: !password.showPassword,
+    });
+  };
+  const handleClickShowConfirmPassword = () => {
+    setConfirmPassword({
+      ...confirmPassword,
+      showPassword: !confirmPassword.showPassword,
+    });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
     <Content>
       <LeftContainer>
-        <form onSubmit={signUp}>
-        <input
-            type="text"
-            placeholder="username"
+        <form onSubmit={handleSubmit(signUp)}>
+        <FormControl error={!!errors.username} fullWidth>
+        <InputLabel>
+            Username
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-username"
+            {...register("username", {required: true})}
+            label="Username"
             value={username}
-            required
             onChange={(e) => setUsername(e.target.value)}
+            disabled={loading}
           />
-          <input
-            type="email"
-            placeholder="e-mail"
+          <FormHelperText error>{errors.username?.type === 'required' && <p role="alert">First name is required</p>}</FormHelperText>
+        </FormControl>
+        <FormControl error={!!errors.email} fullWidth>
+        <InputLabel>
+            Email
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-email"
+            {...register(
+              "email",
+              {required: true, validate: handleValidateEmail})}
+            label="Email"
             value={email}
-            required
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
           />
-          <input
-            type="password"
-            placeholder="password"
-            value={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}
+          <FormHelperText error>{errors.email?.type === 'required' && <p role="alert">Email is required</p>}</FormHelperText>
+          <FormHelperText error>{errors.email?.type === 'validate' && <p role="alert">Email invalid!</p>}</FormHelperText>
+        </FormControl>
+        <FormControl error={!!errors.password} fullWidth>
+          <InputLabel>
+            Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={password.showPassword ? "text" : "password"}
+            value={password.password}
+            {...register("password", {required: true})}
+            onChange={handleChangePassword("password")}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {password.showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+            disabled={loading}
           />
-          <input
-            type="password"
-            placeholder="confirm your password"
-            value={confirmPassword}
-            required
-            onChange={(e) => setConfirmPassword(e.target.value)}
+          <FormHelperText error>{errors.password?.type === 'required' && <p role="alert">Password is required</p>}</FormHelperText>
+        </FormControl>
+        <FormControl error={!!errors.confirmPassword} fullWidth>
+          <InputLabel>
+            Confirm Your Password
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-confirm-password"
+            type={confirmPassword.showPassword ? "text" : "password"}
+            value={confirmPassword.password}
+            {...register("confirmPassword", {required: true, validate: value =>
+              value === password.current})}
+            onChange={handleChangeConfirmPassword("password")}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowConfirmPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {confirmPassword.showPassword ? (
+                    <VisibilityOff />
+                  ) : (
+                    <Visibility />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Confirm your Password"
+            disabled={loading}
           />
-          <button type="submit">Register</button>
+          <FormHelperText error>{errors.confirmPassword?.type === 'required' && <p role="alert">Confirm password is required</p>}</FormHelperText>
+          <FormHelperText error>{errors.confirmPassword?.type === 'validate' && <p role="alert">Passwords don't match!</p>}</FormHelperText>
+        </FormControl>
+        <LoadingButton 
+          className="register-button"
+          variant="contained" 
+          type="submit"
+          loading={loading}
+          >
+            Register
+          </LoadingButton>
+          <Link to="/users/login">Already have an account? Sign in!</Link>
         </form>
-        <h6 onClick={()=> navigate("/login")}>Already have an account?</h6>
       </LeftContainer>
       <RightContainer></RightContainer>
     </Content>
@@ -76,19 +203,35 @@ const Content = styled.div`
   width: 100%;
   height: 100vh;
   display: flex;
+  p{
+    color: red;
+  }
 `;
 const LeftContainer = styled.div`
-  width: 600px;
+  width: 550px;
   height: 100%;
   padding: 40px;
   background-color: white;
-  form {
+  display: flex;
+  align-items: center;
+  h6 {
+    cursor: pointer;
+  }
+  form{
+    width: 100%;
+    height:400px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    padding: 0px 30px;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 125px;
   }
-  h6{
-    cursor: pointer;
+  .register-button{
+    margin-top: 35px;
+    margin-bottom: 15px;
+    width: 100%;
+    height: 50px;
   }
 `;
 const RightContainer = styled.div`
