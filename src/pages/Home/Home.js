@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useEffect, useState } from "react"
+
+import { useState } from "react"
 import styled from "styled-components"
 import CreatePost from "../../components/CreatePost/CreatePost";
 import Header from "../../components/Header"
@@ -26,7 +26,7 @@ export default function Home() {
 };
 
 const Content = styled.div`
-    margin-top: 55px;
+    padding-top: 55px;
     display: flex;
     flex-direction: column;
     align-items: center;

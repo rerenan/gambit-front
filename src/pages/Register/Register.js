@@ -192,7 +192,7 @@ export default function Register() {
           >
             Register
           </LoadingButton>
-          <Link to="/login">Already have an account? Sign in!</Link>
+          <h5>Already have an account? <Link to="/login">Sign in!</Link></h5>
         </form>
       </LeftContainer>
       <RightContainer style={{ backgroundImage: `url(${imageTest})` }}></RightContainer>
@@ -229,7 +229,7 @@ const LeftContainer = styled.div`
     margin-bottom: 125px;
   }
   .register-button{
-    margin-top: 35px;
+    margin-top: 30px;
     margin-bottom: 15px;
     width: 100%;
     height: 50px;
