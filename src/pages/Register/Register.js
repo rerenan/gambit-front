@@ -13,6 +13,7 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LoadingButton from '@mui/lab/LoadingButton';
+import imageTest from "../../assets/images/test.webp"
 
 
 export default function Register() {
@@ -191,10 +192,10 @@ export default function Register() {
           >
             Register
           </LoadingButton>
-          <Link to="/users/login">Already have an account? Sign in!</Link>
+          <Link to="/login">Already have an account? Sign in!</Link>
         </form>
       </LeftContainer>
-      <RightContainer></RightContainer>
+      <RightContainer style={{ backgroundImage: `url(${imageTest})` }}></RightContainer>
     </Content>
   );
 }
@@ -208,7 +209,7 @@ const Content = styled.div`
   }
 `;
 const LeftContainer = styled.div`
-  width: 550px;
+  width: 600px;
   height: 100%;
   padding: 40px;
   background-color: white;
@@ -235,7 +236,6 @@ const LeftContainer = styled.div`
   }
 `;
 const RightContainer = styled.div`
-  width: auto;
+  width: 100%;
   height: 100%;
-  background-color: black;
 `;
