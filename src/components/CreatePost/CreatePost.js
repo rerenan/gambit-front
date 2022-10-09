@@ -8,11 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import { useState } from "react";
 import axios from "axios";
 
-export default function CreatePost({token}) {
+export default function CreatePost({token, getPosts}) {
     const [text, setText] = useState("");
+    const [disabled, setDisabled] = useState(true);
     const { register, handleSubmit } = useForm();
     
     async function send(data){
+       
         const config = {
             headers: {
                 Authorization: `${token}`
@@ -24,10 +26,24 @@ export default function CreatePost({token}) {
                 data,
                 config
             );
+            
+            setText("");
+            getPosts();
+
         }catch(e){
             alert(e.message)
         }
     }
+
+    function handleTextOnChange(e){
+        setText(e.target.value);
+        if(e.target.value === "") {
+            setDisabled(true)
+        }else {
+            setDisabled(false);
+        }
+    }
+
     return (
         <Container>
             <Avatar className="avatar" src="/broken-image.jpg" />
@@ -40,10 +56,10 @@ export default function CreatePost({token}) {
                 color="white" 
                 multiline
                 value={text}
-                onChange={(e)=>setText(e.target.value)}
+                onChange={handleTextOnChange}
             />
             </FormControl>
-            <IconButton type="submit" className="sendButton"><SendRoundedIcon/></IconButton>
+            <IconButton disabled={disabled}  type="submit" className="sendButton"><SendRoundedIcon/></IconButton>
             </form>
         </Container>
     )

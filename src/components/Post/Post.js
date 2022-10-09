@@ -25,11 +25,16 @@ const Container = styled.div`
     background-color: #131720;
     color: white;
     padding: 30px;
+    word-wrap: break-word;
     h2{
         margin-left: 15px;
+        font-size: 19px;
+        font-weight: 500;
     }
     h3{
         margin-top: 30px;
+        font-size: 16px;
+        line-height: 20px;
     }
     
 `

@@ -9,7 +9,6 @@ export default function Home() {
   const [token, setToken] = useState(localStorage.getItem("authToken"));
   const [posts, setPosts] = useState("");
   useEffect(() => {
-    console.log("aaaaaaaaaaaaaaaaaaaaaaa")
     getPosts();
   }, []);
 
@@ -25,7 +24,6 @@ export default function Home() {
         config
       );
       setPosts(response.data);
-      console.log(posts.profileImage)
     } catch (e) {
       alert(e);
       console.log(e);
@@ -47,7 +45,7 @@ export default function Home() {
     <>
       <Header />
       <Content>
-        <CreatePost token={token} />
+        <CreatePost token={token} getPosts={getPosts}/>
         <PostsBox>{posts? renderPosts() : ""}</PostsBox>
       </Content>
     </>
