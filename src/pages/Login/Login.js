@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
@@ -15,6 +15,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LoadingButton from '@mui/lab/LoadingButton';
 import imageTest from "../../assets/images/test.webp"
 import { handleValidateEmail } from "../../utils/emailValidator";
+import UserContext from "../../contexts/userContext";
 
 
 
@@ -30,7 +31,7 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm();
-
+  const {setToken} = useContext(UserContext);
   const navigate = useNavigate();
 
   async function signIn(data) {
@@ -41,6 +42,7 @@ export default function Login() {
         data
       );
       localStorage.setItem("authToken",response.data.token)
+      setToken(response.data.token);
       setLoading(false)
       navigate("/");
 

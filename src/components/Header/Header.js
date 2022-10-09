@@ -134,7 +134,6 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0px 20px;
-
   h1 {
     font-size: 27px;
     font-weight: 700;
