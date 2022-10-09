@@ -1,17 +1,19 @@
-import styled from "styled-components"
+import { useNavigate } from "react-router-dom";
 
+import styled from "styled-components"
 import Avatar from '@mui/material/Avatar';
 
 export default function Post({id, username, profileImage, text}){
-    
+    const navigate = useNavigate();
     
     return (
         <Container key={id}>
             <TopBox>
-                <Avatar src={profileImage}/>
-                <h2>{username}</h2>
+                <UserProfile onClick={()=> navigate(`/${username}`)}>
+                    <Avatar src={profileImage}/>
+                    <h2>{username}</h2>
+                </UserProfile>
             </TopBox>
-                
             
             <h3>{text}</h3>
         </Container>
@@ -48,4 +50,9 @@ const TopBox = styled.div`
         height: 50px;
     }
 
+`
+const UserProfile = styled.div`
+    display: flex;
+    align-items: center;
+    cursor: pointer;
 `
