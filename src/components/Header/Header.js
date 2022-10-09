@@ -10,6 +10,8 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import Logout from "@mui/icons-material/Logout";
+import Input from "@mui/material/Input";
+import SearchIcon from '@mui/icons-material/Search';
 
 export default function Header({ logged, user }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -104,6 +106,16 @@ export default function Header({ logged, user }) {
   return (
     <Container>
       <h1>Gambit</h1>
+      <SearchBox>
+      <SearchIcon sx={{
+        color: "black",
+        marginRight: 0.5
+      }}/>
+        <Input 
+            className="input-text" 
+            disableUnderline
+        />
+      </SearchBox>
       {renderButtons()}
     </Container>
   );
@@ -117,13 +129,33 @@ const Container = styled.div`
   width: 100%;
   height: 55px;
   background-color: #434e62;
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 30px;
+  padding: 0px 20px;
 
   h1 {
     font-size: 27px;
     font-weight: 700;
   }
 `;
+const SearchBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 611px;
+  height: 40px;
+  background-color: white;
+  padding: 0px 10px;
+  border-radius: 6px;
+  position: relative;
+  .input-text {
+    
+      width: 100%;
+      height: 100%;
+      font-size: 20px;
+      margin-right: 0px;
+      
+    }
+`

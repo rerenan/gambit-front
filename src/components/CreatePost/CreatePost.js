@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { FilledInput } from '@mui/material';
+import { FilledInput, Input } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import FormControl from "@mui/material/FormControl";
 import { useForm } from "react-hook-form";
@@ -49,13 +49,14 @@ export default function CreatePost({token, getPosts, username, profileImage}) {
             <Avatar className="avatar" src={profileImage} />
             <form onSubmit={handleSubmit(send)}>
             <FormControl fullWidth>
-            <FilledInput 
+            <Input 
                 className="input-text" 
                 {...register("text", {required: true})}
                 placeholder="Share Your EXP"  
                 multiline
                 value={text}
                 onChange={handleTextOnChange}
+                disableUnderline
             />
             </FormControl>
             <IconButton disabled={disabled}  type="submit" className="sendButton"><SendRoundedIcon/></IconButton>
@@ -76,11 +77,10 @@ const Container = styled.div`
     background-color: #131720;
     .input-text {
         color: white;
-        margin-left: 10px;
+        margin-left: 15px;
         line-height: normal;
     }
     .avatar {
-        margin-top: 15px;
         width: 50px;
         height: 50px;
     }
@@ -88,12 +88,13 @@ const Container = styled.div`
         display: flex;
         width: 100%;
         height: auto;
+        align-items: center;
     }
     .sendButton {
         color: white;
         position: absolute;
         right: 20px;
-        bottom: 30px;
+        bottom: 35px;
     }
     
 `
