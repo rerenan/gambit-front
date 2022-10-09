@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 
 export default function Post({id, username, profileImage, text}){
     const navigate = useNavigate();
-    
+    console.log(text)
     return (
         <Container key={id}>
             <TopBox>
@@ -37,7 +37,7 @@ const Container = styled.div`
     h3{
         margin-top: 30px;
         font-size: 16px;
-        line-height: 20px;
+        white-space: pre-wrap;
     }
     
 `

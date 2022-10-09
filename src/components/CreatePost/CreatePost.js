@@ -14,7 +14,7 @@ export default function CreatePost({token, getPosts, username, profileImage}) {
     const { register, handleSubmit } = useForm();
     
     async function send(data){
-       
+       console.log(data)
         const config = {
             headers: {
                 Authorization: `${token}`
@@ -77,6 +77,7 @@ const Container = styled.div`
     .input-text {
         color: white;
         margin-left: 10px;
+        line-height: normal;
     }
     .avatar {
         margin-top: 15px;
