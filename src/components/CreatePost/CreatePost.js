@@ -10,7 +10,7 @@ import axios from "axios";
 
 export default function CreatePost({token}) {
     const [text, setText] = useState("");
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit } = useForm();
     
     async function send(data){
         const config = {
