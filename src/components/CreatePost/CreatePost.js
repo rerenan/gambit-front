@@ -71,7 +71,7 @@ const Container = styled.div`
         color: white;
         position: absolute;
         right: 20px;
-        bottom: 30px;
+        bottom: 20px;
     }
 `
 
