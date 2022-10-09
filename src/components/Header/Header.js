@@ -70,7 +70,7 @@ export default function Header({ logged, user }) {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem>
+            <MenuItem onClick={()=> navigate(`/${user.username}`)}>
               <Avatar src={user.profileImage}/> {user.username}
             </MenuItem>
             <Divider />
