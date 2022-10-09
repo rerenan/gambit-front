@@ -76,7 +76,7 @@ export default function Home() {
 
   return (
     <>
-      <Header  logged={!!token}/>
+      <Header  logged={!!token} user={user}/>
       <Content>
         {createPostRender()}
         

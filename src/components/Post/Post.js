@@ -21,9 +21,10 @@ export default function Post({id, username, profileImage, text}){
 const Container = styled.div`
     width: 720px;
     min-height: 100px;
-    border-bottom: #4A5568 solid 0.2px;
+    border-bottom: #4A5568 solid 1px;
+    border-left: #4A5568 solid 1px;
+    border-right: #4A5568 solid 1px;
     background-color: #131720;
-    color: white;
     padding: 30px;
     word-wrap: break-word;
     h2{

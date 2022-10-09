@@ -52,8 +52,7 @@ export default function CreatePost({token, getPosts, username, profileImage}) {
             <FilledInput 
                 className="input-text" 
                 {...register("text", {required: true})}
-                placeholder="Share Your EXP" 
-                color="white" 
+                placeholder="Share Your EXP"  
                 multiline
                 value={text}
                 onChange={handleTextOnChange}
@@ -68,9 +67,13 @@ export default function CreatePost({token, getPosts, username, profileImage}) {
 const Container = styled.div`
     width: 720px;;
     padding: 30px;
-    padding-right: 50px;
+    padding-right: 65px;
     display: flex;
     position: relative;
+    border-bottom: #4A5568 solid 1px;
+    border-left: #4A5568 solid 1px;
+    border-right: #4A5568 solid 1px;
+    background-color: #131720;
     .input-text {
         color: white;
         margin-left: 10px;
@@ -89,7 +92,7 @@ const Container = styled.div`
         color: white;
         position: absolute;
         right: 20px;
-        bottom: 20px;
+        bottom: 30px;
     }
     
 `
