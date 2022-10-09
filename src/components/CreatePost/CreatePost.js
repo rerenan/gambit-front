@@ -67,7 +67,7 @@ export default function CreatePost({token, getPosts, username, profileImage}) {
 
 const Container = styled.div`
     width: 720px;;
-    padding: 20px;
+    padding: 30px;
     padding-right: 50px;
     display: flex;
     position: relative;
@@ -77,6 +77,8 @@ const Container = styled.div`
     }
     .avatar {
         margin-top: 15px;
+        width: 50px;
+        height: 50px;
     }
     form{
         display: flex;
@@ -89,6 +91,7 @@ const Container = styled.div`
         right: 20px;
         bottom: 20px;
     }
+    
 `
 
 

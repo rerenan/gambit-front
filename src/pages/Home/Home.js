@@ -10,8 +10,9 @@ export default function Home() {
   const [user, setUser] = useState("");
   const [posts, setPosts] = useState("");
   useEffect(() => {
-
-    getPosts();
+    if(token){
+        getPosts();
+    }
   }, []);
 
   async function getUser(config){
@@ -24,17 +25,20 @@ export default function Home() {
       } catch (e) {
         alert(e);
         console.log(e);
+        localStorage.removeItem("authToken")
+        window.location.reload()
       }
   }
 
   async function getPosts() {
+    try {
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
     getUser(config)
-    try {
+    
       const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/posts`,
         config
@@ -57,16 +61,25 @@ export default function Home() {
     ));
   }
 
-  return (
-    <>
-      <Header />
-      <Content>
-        <CreatePost 
+  function createPostRender(){
+    if(token){
+        return (
+            <CreatePost
             token={token} 
             getPosts={getPosts} 
             username={user.username}
             profileImage={user.profileImage}
         />
+        )
+    }
+  }
+
+  return (
+    <>
+      <Header  logged={!!token}/>
+      <Content>
+        {createPostRender()}
+        
         <PostsBox>{posts? renderPosts() : ""}</PostsBox>
       </Content>
     </>
