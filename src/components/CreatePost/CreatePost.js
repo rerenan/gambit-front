@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import { useState } from "react";
 import axios from "axios";
 
-export default function CreatePost({token, getPosts}) {
+export default function CreatePost({token, getPosts, username, profileImage}) {
     const [text, setText] = useState("");
     const [disabled, setDisabled] = useState(true);
     const { register, handleSubmit } = useForm();
@@ -46,7 +46,7 @@ export default function CreatePost({token, getPosts}) {
 
     return (
         <Container>
-            <Avatar className="avatar" src="/broken-image.jpg" />
+            <Avatar className="avatar" src={profileImage} />
             <form onSubmit={handleSubmit(send)}>
             <FormControl fullWidth>
             <FilledInput 

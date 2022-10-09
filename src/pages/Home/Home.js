@@ -7,10 +7,25 @@ import Post from "../../components/Post/Post";
 
 export default function Home() {
   const [token, setToken] = useState(localStorage.getItem("authToken"));
+  const [user, setUser] = useState("");
   const [posts, setPosts] = useState("");
   useEffect(() => {
+
     getPosts();
   }, []);
+
+  async function getUser(config){
+    try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/user/me`,
+          config
+        );
+        setUser(response.data);
+      } catch (e) {
+        alert(e);
+        console.log(e);
+      }
+  }
 
   async function getPosts() {
     const config = {
@@ -18,6 +33,7 @@ export default function Home() {
         Authorization: `Bearer ${token}`,
       },
     };
+    getUser(config)
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/posts`,
@@ -45,7 +61,12 @@ export default function Home() {
     <>
       <Header />
       <Content>
-        <CreatePost token={token} getPosts={getPosts}/>
+        <CreatePost 
+            token={token} 
+            getPosts={getPosts} 
+            username={user.username}
+            profileImage={user.profileImage}
+        />
         <PostsBox>{posts? renderPosts() : ""}</PostsBox>
       </Content>
     </>
