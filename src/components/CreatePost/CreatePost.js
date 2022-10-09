@@ -35,7 +35,7 @@ export default function CreatePost({token}) {
             <FormControl fullWidth>
             <FilledInput 
                 className="input-text" 
-                {...register("text")}
+                {...register("text", {required: true})}
                 placeholder="Share Your EXP" 
                 color="white" 
                 multiline
