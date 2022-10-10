@@ -5,7 +5,6 @@ import Avatar from '@mui/material/Avatar';
 
 export default function Post({id, userId, username, profileImage, text}){
     const navigate = useNavigate();
-    console.log(text)
     return (
         <Container key={id}>
             <TopBox>

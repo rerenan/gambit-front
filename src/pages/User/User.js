@@ -13,9 +13,17 @@ import EditProfile from "../../components/EditProfile";
 export default function User(){
     const {user, token} = useContext(UserContext);
     const {username: pageUsername} = useParams();
-    const [profileData, setProfileData] = useState("");
+    const [profileData, setProfileData] = useState({
+      "id": "",
+      "userId": "",
+      "profilePicture": null,
+      "biography": null,
+      "banner": null,
+      "followers": []
+    });
     const [posts, setPosts] = useState("");
-    const [open, setOpen] =useState(false)
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     
     useEffect( ()=>{
        getProfile()
@@ -47,6 +55,39 @@ export default function User(){
       }
     }
     }
+    async function follow(){
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      try {
+        await axios.post(`${process.env.REACT_APP_API_BASE_URL}/follow/${profileData.userId}`,"",config);
+        setLoading(false);
+        getProfile();
+      } catch (error) {
+        setLoading(false);
+        console.log(error)
+      }
+    }
+
+    async function unfollow(){
+      setLoading(true);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      try {
+        await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/unfollow/${profileData.userId}`,config);
+        setLoading(false);
+        getProfile()
+      } catch (error) {
+        setLoading(false);
+        console.log(error)
+      }
+    }
     function renderPosts() {
       return posts.map(({ id, userId, username, profileImage, text }) => (
         <Post
@@ -70,18 +111,35 @@ export default function User(){
             Edit Perfil
           </Button>
         )
-      }else{
+      }else if(profileData.followers.includes(user.id)){
         return (
-          <Button variant="contained" className="button follow" size="medium">
-            Seguir
+          <Button 
+          variant="outlined" 
+          className="button follow" 
+          size="medium"
+          onClick={()=> unfollow()}
+          disabled={loading}
+          >
+            Unfollow
+          </Button>
+        )
+      }else {
+        return (
+          <Button 
+          variant="contained" 
+          className="button follow" 
+          size="medium"
+          onClick={()=> follow()}
+          disabled={loading}
+          >
+            Follow
           </Button>
         )
       }
     }
-
     return (
         <>
-        <Header  logged={!!token} user={user}/>
+        <Header  logged={!!token} user={user} getProfile={getProfile}/>
         <Content>
             <BannerBox>
             <img className="banner" src={profileData.banner? profileData.banner: defaultBanner} alt="" />

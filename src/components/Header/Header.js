@@ -13,11 +13,11 @@ import Logout from "@mui/icons-material/Logout";
 import Input from "@mui/material/Input";
 import SearchIcon from '@mui/icons-material/Search';
 
-export default function Header({ logged, user }) {
+export default function Header({ logged, user , getProfile}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-
+  console.log(user.username)
   function renderButtons() {
     if (logged) {
       return (
@@ -72,7 +72,10 @@ export default function Header({ logged, user }) {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem onClick={()=> navigate(`/${user.username}`)}>
+            <MenuItem onClick={()=> {
+              navigate(`/${user.username}`)
+              getProfile()
+              }}>
               <Avatar src={user.profileImage}/> {user.username}
             </MenuItem>
             <Divider />

@@ -8,7 +8,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 
 export default function EditProfile({open, setOpen}){
-    console.log(open)
     return(
         <Dialog open={open} onClose={()=>setOpen(false)}>
         <DialogTitle>Subscribe</DialogTitle>
