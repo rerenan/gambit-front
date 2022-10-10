@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Button } from "@mui/material";
 import Stack from "@mui/material/Stack";
@@ -17,7 +17,9 @@ export default function Header({ logged, user , getProfile}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-
+  useEffect(()=>{
+    
+  })
   function renderButtons() {
     if (logged) {
       return (

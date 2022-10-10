@@ -5,7 +5,6 @@ import Header from "../../components/Header"
 import UserContext from "../../contexts/userContext";
 import { Avatar, Button } from "@mui/material";
 import { useParams } from "react-router-dom";
-import defaultBanner from "../../assets/images/banner.jpg"
 import Post from "../../components/Post/Post";
 import EditProfile from "../../components/EditProfile";
 
@@ -142,7 +141,7 @@ export default function User(){
         <Header  logged={!!token} user={user} getProfile={getProfile}/>
         <Content>
             <BannerBox>
-            <img className="banner" src={profileData.banner? profileData.banner: defaultBanner} alt="" />
+            <img className="banner" src={profileData.banner} alt="" />
             <ProfileBox>
             <Avatar src={profileData.profilePicture}/>
             <h1>{pageUsername}</h1>
@@ -152,7 +151,7 @@ export default function User(){
             {isOwnerPage()}
             </DescriptionBox>
             {posts? renderPosts() : ""}
-            <EditProfile open={open} setOpen={setOpen} profileData={profileData} setProfileData={profileData}/>
+            <EditProfile open={open} setOpen={setOpen} profileData={profileData} getProfile={getProfile}/>
         </Content>
         </>
     )

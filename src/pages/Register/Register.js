@@ -21,7 +21,7 @@ export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
-  const [password, setpassword] = useState({
+  const [password, setPassword] = useState({
     amount: "",
     password: "",
     weight: "",
@@ -61,17 +61,8 @@ export default function Register() {
     }
   }
 
-
-  const handleChangePassword = (prop) => (event) => {
-    setpassword({ ...password, [prop]: event.target.value });
-  };
-
-  const handleChangeConfirmPassword = (prop) => (event) => {
-    setConfirmPassword({ ...confirmPassword, [prop]: event.target.value });
-  };
-
   const handleClickShowPassword = () => {
-    setpassword({
+    setPassword({
       ...password,
       showPassword: !password.showPassword,
     });
@@ -130,7 +121,7 @@ export default function Register() {
             type={password.showPassword ? "text" : "password"}
             value={password.password}
             {...register("password", {required: true})}
-            onChange={handleChangePassword("password")}
+            onChange={(e)=>setPassword({...password, password: e.target.value})}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -158,7 +149,7 @@ export default function Register() {
             value={confirmPassword.password}
             {...register("confirmPassword", {required: true, validate: value =>
               value === password.current})}
-            onChange={handleChangeConfirmPassword("password")}
+            onChange={(e)=>setConfirmPassword({...password, password: e.target.value})}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton

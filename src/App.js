@@ -22,7 +22,7 @@ function App() {
   if(token){
       getUser();
   }
-}, []);
+}, [token]);
 
 async function getUser(){
   const config = {
