@@ -6,25 +6,58 @@ import UserContext from "../../contexts/userContext";
 import { Avatar } from "@mui/material";
 import { useParams } from "react-router-dom";
 import defaultBanner from "../../assets/images/banner.jpg"
+import Post from "../../components/Post/Post";
 
 
 export default function User(){
     const {user, token} = useContext(UserContext);
     const {username: pageUsername} = useParams();
     const [profileData, setProfileData] = useState("");
+    const [posts, setPosts] = useState("");
     
-    useEffect(()=>{
-      getProfile();
+    useEffect( ()=>{
+       getProfile()
     },[])
+    useEffect( ()=>{
+      getPosts()
+   },[profileData])
 
     async function getProfile() {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/profile/${pageUsername}`);
         setProfileData(response.data);
+        getPosts()
       } catch (e) {
         console.log(e);
       }
     }
+
+    async function getPosts() {
+      if(profileData.userId){
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/posts/${profileData.userId}`
+        );
+        setPosts(response.data);
+      } catch (e) {
+        alert(e);
+        console.log(e);
+      }
+    }
+    }
+    function renderPosts() {
+      return posts.map(({ id, userId, username, profileImage, text }) => (
+        <Post
+          key={id}
+          userId={userId}
+          username={username}
+          profileImage={profileImage}
+          text={text}
+        />
+      ));
+    }
+
+   
 
     return (
         <>
@@ -40,7 +73,7 @@ export default function User(){
             <DescriptionBox>
 
             </DescriptionBox>
-            {}
+            {posts? renderPosts() : ""}
         </Content>
         </>
     )
