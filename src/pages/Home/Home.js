@@ -36,9 +36,9 @@ export default function Home() {
     }
   }
   function renderPosts() {
-    return posts.map(({ userId, username, profileImage, text }, index) => (
+    return posts.map(({ id, userId, username, profileImage, text }) => (
       <Post
-        key={index}
+        key={id}
         userId={userId}
         username={username}
         profileImage={profileImage}

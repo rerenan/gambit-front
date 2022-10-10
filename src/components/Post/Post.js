@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components"
 import Avatar from '@mui/material/Avatar';
 
-export default function Post({id, username, profileImage, text}){
+export default function Post({id, userId, username, profileImage, text}){
     const navigate = useNavigate();
     console.log(text)
     return (
