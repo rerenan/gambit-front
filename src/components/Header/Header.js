@@ -17,7 +17,7 @@ export default function Header({ logged, user , getProfile}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
-  console.log(user.username)
+
   function renderButtons() {
     if (logged) {
       return (
@@ -73,8 +73,8 @@ export default function Header({ logged, user , getProfile}) {
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
             <MenuItem onClick={()=> {
-              navigate(`/${user.username}`)
-              getProfile()
+              navigate(`/${user.username}`);
+              
               }}>
               <Avatar src={user.profileImage}/> {user.username}
             </MenuItem>
@@ -108,7 +108,9 @@ export default function Header({ logged, user , getProfile}) {
 
   return (
     <Container>
+      <div onClick={()=> navigate("/")}>
       <h1>Gambit</h1>
+      </div>
       <SearchBox>
       <SearchIcon sx={{
         color: "black",
@@ -140,13 +142,14 @@ const Container = styled.div`
   h1 {
     font-size: 27px;
     font-weight: 700;
+    cursor: pointer;
   }
 `;
 const SearchBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 611px;
+  width: 400px;
   height: 40px;
   background-color: white;
   padding: 0px 10px;

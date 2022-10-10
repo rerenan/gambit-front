@@ -27,7 +27,7 @@ export default function User(){
     
     useEffect( ()=>{
        getProfile()
-    },[])
+    },[pageUsername])
     useEffect( ()=>{
       getPosts()
    },[profileData])
@@ -152,7 +152,7 @@ export default function User(){
             {isOwnerPage()}
             </DescriptionBox>
             {posts? renderPosts() : ""}
-            <EditProfile open={open} setOpen={setOpen}/>
+            <EditProfile open={open} setOpen={setOpen} profileData={profileData} setProfileData={profileData}/>
         </Content>
         </>
     )
