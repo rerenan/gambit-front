@@ -3,10 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "../../components/Header"
 import UserContext from "../../contexts/userContext";
-import { Avatar } from "@mui/material";
+import { Avatar, Button } from "@mui/material";
 import { useParams } from "react-router-dom";
 import defaultBanner from "../../assets/images/banner.jpg"
 import Post from "../../components/Post/Post";
+import EditProfile from "../../components/EditProfile";
 
 
 export default function User(){
@@ -14,6 +15,7 @@ export default function User(){
     const {username: pageUsername} = useParams();
     const [profileData, setProfileData] = useState("");
     const [posts, setPosts] = useState("");
+    const [open, setOpen] =useState(false)
     
     useEffect( ()=>{
        getProfile()
@@ -57,7 +59,25 @@ export default function User(){
       ));
     }
 
-   
+    function isOwnerPage(){
+      if(user.id === profileData.userId){
+        return (
+          <Button 
+            variant="outlined" 
+            className="button edit" 
+            onClick={()=>setOpen(true)}
+          >
+            Edit Perfil
+          </Button>
+        )
+      }else{
+        return (
+          <Button variant="contained" className="button follow" size="medium">
+            Seguir
+          </Button>
+        )
+      }
+    }
 
     return (
         <>
@@ -71,9 +91,10 @@ export default function User(){
             </ProfileBox>
             </BannerBox>
             <DescriptionBox>
-
+            {isOwnerPage()}
             </DescriptionBox>
             {posts? renderPosts() : ""}
+            <EditProfile open={open} setOpen={setOpen}/>
         </Content>
         </>
     )
@@ -92,20 +113,34 @@ const BannerBox = styled.div`
     width: 100%;
     height: 300px;
     object-fit: cover;
+    
   }
 `
 const DescriptionBox = styled.div`
       width: 720px;
       height: 200px;
-      background-color: green;
+      border-bottom: #4A5568 solid 1px;
+      background-color: #131720;
+      padding: 30px;
+      position: relative;
+      .button{
+        position: absolute;
+        right: 0px;
+      }
+      .follow{
+        border-radius: 10px;
+        text-transform: none;
+        font-size: 18px;
+      }
 `
 const ProfileBox = styled.div`
   position: absolute;
-  left: 150px;
+  left: 25%;
   top: 275px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1;
   h1{
     font-size: 28px;
     font-weight: 700;
@@ -115,5 +150,8 @@ const ProfileBox = styled.div`
     width: 150px;
     height: 150px;
     margin-bottom: 20px;
+  }
+  @media only screen and (max-width: 1280px) {
+    left: 120px
   }
 `

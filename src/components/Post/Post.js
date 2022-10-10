@@ -29,6 +29,9 @@ const Container = styled.div`
     background-color: #131720;
     padding: 30px;
     word-wrap: break-word;
+    :hover{
+        filter: brightness(1.25);
+    }
     h2{
         margin-left: 15px;
         font-size: 19px;
